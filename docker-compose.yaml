@@ -1,0 +1,52 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        MONGODB_URI: ${MONGODB_URI}
+        NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+        CLERK_PUBLISHABLE_KEY: ${CLERK_PUBLISHABLE_KEY}
+        CLERK_SECRET_KEY": ${CLERK_SECRET_KEY}
+    
+    networks:
+      - app_net
+
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URI=${MONGODB_URI}
+      - NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+      - CLERK_SECRET_KEY=${CLERK_SECRET_KEY}
+      - APOLLO_API_KEY=_nhnJERXQ8WkQZGhq9bxyg
+      - EMAIL=${EMAIL}
+      - EMAIL_PASS=${EMAIL_PASS}
+      - NODE_ENV=${NODE_ENV}
+      - DB_NAME=${DB_NAME}
+      - DB_COLLECTION=${DB_COLLECTION}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+    
+    
+     
+
+    depends_on:
+      - mongodb
+
+  
+  mongodb:
+    image: mongodb/mongodb-community-server
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGODB_INITDB_ROOT_USERNAME=jsc
+      - MONGODB_INITDB_ROOT_PASSWORD=pass
+    volumes:
+      - type: bind
+        source: ./data_mongodb
+        target: /data/db
+    command: mongod --bind_ip_all
+    networks:
+      - app_net
+  
+networks:
+  app_net:
+    driver: bridge
