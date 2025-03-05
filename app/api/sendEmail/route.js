@@ -24,7 +24,7 @@ const generateEmailContent = async (recipientEmail) => {
     try {
       // Send a prompt to reqGroqAI
       const chatCompletion = await reqGroqAI(`
-        Generate a subject line and fill in the gaps in the email body below. Return only the JSON object as the output, without any extra text or explanation.
+        Generate a subject line and fill inside the brackets "{[]}" in the email body below. Return only the JSON object as the output, without any extra text or explanation.
 
 Email body:
 Hi [name],
