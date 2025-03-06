@@ -2,7 +2,6 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
 // Define protected API routes
 const isProtectedRoute = createRouteMatcher([
-  '/api/cron',
   '/api/apolloapi',
   '/api/db',
   '/api/db/:id', // Dynamic route

@@ -25,28 +25,34 @@ services:
       - DB_COLLECTION=${DB_COLLECTION}
       - GROQ_API_KEY=${GROQ_API_KEY}
     
-    
-     
+
+
 
     depends_on:
       - mongodb
 
   
   mongodb:
-    image: mongodb/mongodb-community-server
+    image: mongo:latest
     ports:
       - "27017:27017"
     environment:
-      - MONGODB_INITDB_ROOT_USERNAME=jsc
-      - MONGODB_INITDB_ROOT_PASSWORD=pass
+      - MONGO_INITDB_ROOT_USERNAME=jsc
+      - MONGO_INITDB_ROOT_PASSWORD=pass
     volumes:
-      - type: bind
-        source: ./data_mongodb
-        target: /data/db
-    command: mongod --bind_ip_all
+      - ./data_mongodb:/data/db
     networks:
       - app_net
-  
+
 networks:
   app_net:
     driver: bridge
+
+
+# run this file - keep .env.log in the root directory 
+# docker-compose --env-file ./.env.local up -d —build
+
+# If authentication error, drop volumens and delete the folders with that name aswell
+# docker compose down -v
+# rm -rf ./data_mongodb/*
+# if 
